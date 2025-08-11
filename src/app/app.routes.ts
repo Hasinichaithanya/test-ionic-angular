@@ -10,4 +10,8 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path:'cart',
+    loadComponent : ()=> import('./cart/cart.component').then(m=>m.CartComponent)
+  }
 ];
