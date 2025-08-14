@@ -1,12 +1,12 @@
-export interface FoodItem {
+export interface IFoodItem {
     name: string;
     cost: number;
     description: string;
-    image:string;
+    image: string;
     id: number
 }
 
 
-export interface FoodCartItem extends FoodItem{
+export interface IFoodCartItem extends IFoodItem {
     quantity: number | 1
 }

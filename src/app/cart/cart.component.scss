@@ -1,0 +1,10 @@
+ion-card{
+    display: flex;
+    align-items: flex-start;
+}
+
+@media (max-width: 700px) {
+    .description{
+        display: none;
+    }
+}

@@ -1,0 +1,1 @@
+export const PREFERENCES_CART_LIST = 'cartItems'

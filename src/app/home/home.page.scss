@@ -1,4 +1,30 @@
-ion-card {
-    padding: 10px;
+.cart-cost-btn{
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+ion-img{
+    height: 200px !important;
+    width: 300px !important;
+}
+ion-card{
+    height: 350px;
+    width: 300px;
+}
+.share-icon{
+    position: fixed;
+    right: 0;
+    top:5;
+    padding: 10px;
+    color: rgb(20, 19, 20);
+}
+.margin-top{
+    margin-top: 100px;
+    text-align: center;
+}
+@media (max-width: 650px) {
+   ion-card{
+    height: 360px;
+   }    
 }

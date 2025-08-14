@@ -1,0 +1,1 @@
+export type TPosition = 'top' | 'middle' | 'bottom';

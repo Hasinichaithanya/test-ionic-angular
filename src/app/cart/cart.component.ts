@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FoodCartItem } from '../interfaces/food-item.interface';
-import { CartService } from '../services/cart.service';
 import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
+import { IFoodCartItem } from '../../interfaces/food-item.interface';
+import { CartService } from '../../services/cart.service';
+import {
   IonContent,
   IonGrid,
   IonRow,
@@ -13,18 +15,22 @@ import {
   IonButton,
   IonCard,
   IonCardContent,
-  IonImg,IonIcon
+  IonImg,
+  IonIcon, IonButtons, IonCardHeader, IonCardTitle
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { addCircleOutline, removeCircleOutline, trashOutline } from 'ionicons/icons';
+import { BarCodeService } from 'src/services/barcode.service';
+import { ClipboardService } from 'src/services/clipboard.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
-  imports: [IonIcon,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
+  imports: [
+    IonIcon,
     IonContent,
     IonGrid,
     IonRow,
@@ -35,18 +41,41 @@ import { CommonModule } from '@angular/common';
     IonCard,
     IonImg,
     IonCardContent,
+    RouterLink,
+    IonButtons, IonCardHeader, IonCardTitle
   ],
 })
-export class CartComponent  implements OnInit {
-  cartItems: FoodCartItem[];
+export class CartComponent {
+  cartItems!: IFoodCartItem[]
 
-constructor(public cartService: CartService) {
-    this.cartItems = this.cartService.cartItems;
-    console.log(this.cartItems)
-    // addIcons({
-    //   cartOutline,
-    // });
+  constructor(public cartService: CartService, private qrService: BarCodeService) {
+    this.cartService.cartItems$.subscribe((res) => {
+      console.log(res);
+      this.cartItems = res;
+    })
+    addIcons({
+      addCircleOutline, removeCircleOutline, trashOutline
+    })
   }
-  ngOnInit() {}
+
+  increaseQuantity(item: IFoodCartItem) {
+    let newQuantity = item.quantity + 1
+    this.cartService.updateCartItemQuantity(item.id, newQuantity)
+  }
+
+
+  decreaseQuantity(item: IFoodCartItem) {
+    let newQuantity = item.quantity - 1
+    this.cartService.updateCartItemQuantity(item.id, newQuantity)
+  }
+
+  deleteItemFromCart(item: IFoodCartItem) {
+    this.cartService.deleteFromCart(item.id)
+  }
+
+  scanQr() {
+    this.qrService.scanCode()
+  }
+
 
 }
